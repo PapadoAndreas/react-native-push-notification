@@ -6,6 +6,7 @@
 
 import { AppState, Platform } from 'react-native';
 import { component } from './component';
+import PushNotification from "react-native-push-notification";
 
 const Notifications = {
   handler: component,
@@ -632,6 +633,15 @@ Notifications.deleteChannel = function() {
 Notifications.setNotificationCategories = function() {
   return this.callNative('setNotificationCategories', arguments);
 }
+
+
+
+PushNotification.configure({
+  onNotification: function (notification) {
+    console.log("Notification received:", notification);
+  },
+  requestPermissions: Platform.OS === 'ios',
+});
 
 // https://developer.android.com/reference/android/app/NotificationManager#IMPORTANCE_DEFAULT
 Notifications.Importance = Object.freeze({
