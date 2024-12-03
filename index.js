@@ -6,6 +6,7 @@
 
 import { AppState, Platform } from 'react-native';
 import { component } from './component';
+import PushNotification from "react-native-push-notification";
 
 const Notifications = {
   handler: component,
@@ -25,6 +26,13 @@ const Notifications = {
     sound: true
   }
 };
+
+PushNotification.configure({
+  onNotification: function (notification) {
+    console.log("Notification received:", notification);
+  },
+  requestPermissions: Platform.OS === 'ios',
+});
 
 Notifications.callNative = function(name, params) {
   if ( typeof this.handler[name] === 'function' ) {
